@@ -4,18 +4,18 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { colors } from '@/constants/theme'
 import { s } from './styles'
 
-type UseProductsItemProps = {
+type UseCustomersItemProps = {
   description: string
-  id: string
+  id: number
 }
 
-const UseProductsItem = ({ description, id }: UseProductsItemProps) => {
+const UseCustomersItem = ({ description, id }: UseCustomersItemProps) => {
   return (
     <TouchableOpacity
       style={s.container}
       onPress={() =>
         router.navigate({
-          pathname: '/(products)/details/[id]',
+          pathname: '/customers/[id]',
           params: { id },
         })
       }
@@ -31,4 +31,4 @@ const UseProductsItem = ({ description, id }: UseProductsItemProps) => {
   )
 }
 
-export { UseProductsItem }
+export { UseCustomersItem }

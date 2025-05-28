@@ -1,14 +1,18 @@
 import type { RawAxiosRequestHeaders } from 'axios'
 import { useEffect, useState } from 'react'
 import {
+  useGetAllCustomerGroups,
+  useGetAllCustomers,
+} from '@/http/endpoints/customers/customers'
+import {
   useGetAllProduct,
   useGetAllProductGroups,
 } from '@/http/endpoints/products/products'
 import { useDebouncedSearch } from '@/utils/debounced-search'
 import { getHeaders } from '@/utils/utils'
 
-type ProductsListData = {
-  id: string
+type CustomersListData = {
+  id: number
   description: string
 }[]
 
@@ -17,16 +21,16 @@ type GroupsListData = {
   value: string
 }[]
 
-const useProductsListContainer = () => {
+const useCustomersListContainer = () => {
   const [headers, setHeaders] = useState<RawAxiosRequestHeaders>()
-  const [allProducts, setAllProducts] = useState<ProductsListData>()
-  const [allProductsGroups, setAllProductsGroups] = useState<GroupsListData>()
+  const [allCustomers, setAllCustomers] = useState<CustomersListData>()
+  const [allCustomersGroups, setAllCustomersGroups] = useState<GroupsListData>()
   const [page, setPage] = useState(1)
   const [groupId, setGroupId] = useState<number>()
   const [search, setSearch] = useState<string>()
   const [debouncedSearch, setDebouncedSearch] = useState<string>()
 
-  const { data, isLoading, isSuccess, isFetching } = useGetAllProduct(
+  const { data, isLoading, isSuccess, isFetching } = useGetAllCustomers(
     { page, groupId, search: debouncedSearch },
     {
       request: { headers },
@@ -37,41 +41,41 @@ const useProductsListContainer = () => {
     data: groups,
     isLoading: isLoadingGroups,
     isSuccess: isSuccessGroups,
-  } = useGetAllProductGroups({
+  } = useGetAllCustomerGroups({
     request: { headers },
     query: { enabled: !!headers },
   })
 
   const mappingData = async () => {
     if (data && data !== 'null') {
-      const products = data.products.map(product => ({
-        id: product.id,
-        description: product.description,
+      const customer = data.customers.map(customer => ({
+        id: customer.id,
+        description: customer.companyName,
       }))
 
-      setAllProducts(products)
+      setAllCustomers(customer)
     }
   }
 
   const mappingGroupsData = async () => {
-    if (groups) {
+    if (groups && groups !== 'null') {
       const mappedGroups = groups?.groups.map(group => ({
         key: group.id,
         value: group.description,
       }))
 
-      setAllProductsGroups(mappedGroups)
+      setAllCustomersGroups(mappedGroups)
     }
   }
 
   const setNextPageData = () => {
     if (data && data !== 'null') {
-      const products = data.products.map(product => ({
-        id: product.id,
-        description: product.description,
+      const products = data.customers.map(customer => ({
+        id: customer.id,
+        description: customer.companyName,
       }))
 
-      setAllProducts(prev => {
+      setAllCustomers(prev => {
         if (prev) {
           return [...prev, ...products]
         }
@@ -91,7 +95,7 @@ const useProductsListContainer = () => {
   }
 
   const infiniteScroll = () => {
-    if (allProducts && allProducts.length > 9) {
+    if (allCustomers && allCustomers.length > 9) {
       setPage(prev => prev + 1)
     }
   }
@@ -121,7 +125,7 @@ const useProductsListContainer = () => {
   }, [])
 
   return {
-    allProducts,
+    allCustomers,
     isLoading,
     isFetching,
     setPage,
@@ -130,10 +134,14 @@ const useProductsListContainer = () => {
     groupId,
     filterRequest,
     clearFilterRequest,
-    allProductsGroups,
+    allCustomersGroups,
     isLoadingGroups,
     infiniteScroll,
   }
 }
 
-export { useProductsListContainer, type ProductsListData, type GroupsListData }
+export {
+  useCustomersListContainer,
+  type CustomersListData,
+  type GroupsListData,
+}

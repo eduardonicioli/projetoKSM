@@ -3,21 +3,22 @@ import { colors, fontFamily } from '@/constants/theme'
 
 export const s = StyleSheet.create({
   container: {
-  padding: 16,
-  borderRadius: 8,  
+    padding: 16,
+    gap: 4,
   },
   list: {
-  justifyContent: 'center',
-  gap: 16, // Espaçamento entre os itens
+    height: 76,
+    gap: 16,
   },
   title: {
     fontSize: 12,
     fontFamily: fontFamily.semiBold,
   },
   buttonWrapper: {
-  flex: 1 / 3, // Distribui igualmente em 3 colunas
-  alignItems: 'center',
-  padding: 8,
+    width: 76,
+    height: 76,
+    alignItems: 'center',
+    gap: 4,
   },
   button: {
     width: 56,

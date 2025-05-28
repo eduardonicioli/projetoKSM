@@ -1,18 +1,19 @@
 import { Picker } from '@react-native-picker/picker'
 import { IconSearch, IconTrash } from '@tabler/icons-react-native'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { Header } from '@/components/header'
 import { Input } from '@/components/input'
 import { Loading } from '@/components/loading'
 import { colors } from '@/constants/theme'
 import type {
+  CustomersListData,
   GroupsListData,
-  ProductsListData,
-} from '@/hooks/use-products-list-container'
-import { UseProductsItem } from '../components/products-item/use-products-item'
+} from '@/hooks/use-customers-list-container'
+import { UseCustomersItem } from '../components/customers-item/use-customers-item'
 import { s } from './styles'
 
-type UseProductsListScreenProps = {
-  products: ProductsListData
+type UseCustomersListScreenProps = {
+  customers: CustomersListData
   groups: GroupsListData
   setPage: React.Dispatch<React.SetStateAction<number>>
   search: string | undefined
@@ -24,8 +25,8 @@ type UseProductsListScreenProps = {
   infiniteScroll: () => void
 }
 
-const UseProductsListScreen = ({
-  products,
+const UseCustomersListScreen = ({
+  customers,
   groups,
   setPage,
   search,
@@ -35,11 +36,13 @@ const UseProductsListScreen = ({
   filterRequest,
   clearFilterRequest,
   infiniteScroll,
-}: UseProductsListScreenProps) => {
+}: UseCustomersListScreenProps) => {
   return (
     <View style={s.container}>
+      <Header title="Clientes" />
+
       <View style={s.header}>
-        <Text style={s.title}>Produtos: </Text>
+        <Text style={s.title}>Lista de clientes: </Text>
 
         <TouchableOpacity style={s.clear} onPress={clearFilterRequest}>
           <Text style={s.clearText}>Limpar</Text>
@@ -53,11 +56,11 @@ const UseProductsListScreen = ({
             mode="dialog"
             selectedValue={groupId}
             onValueChange={filterRequest}
-            prompt="Grupos de produto"
+            prompt="Grupos de clientes"
           >
             <Picker.Item
               value={undefined}
-              label="Filtrar por grupo de produtos"
+              label="Filtrar por grupo de clientes"
               enabled={false}
             />
             {groups.map(group => {
@@ -85,14 +88,14 @@ const UseProductsListScreen = ({
       </View>
 
       <FlatList
-        data={products}
-        keyExtractor={item => item.id}
+        data={customers}
+        keyExtractor={item => item.id.toString()}
         contentContainerStyle={s.list}
         onRefresh={() => setPage(1)}
         refreshing={false}
         onEndReached={infiniteScroll}
         renderItem={({ item }) => (
-          <UseProductsItem description={item.description} id={item.id} />
+          <UseCustomersItem description={item.description} id={item.id} />
         )}
         ListFooterComponent={() =>
           isFetching && (
@@ -106,4 +109,4 @@ const UseProductsListScreen = ({
   )
 }
 
-export { UseProductsListScreen }
+export { UseCustomersListScreen }

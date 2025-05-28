@@ -3,7 +3,6 @@ import {
   IconClipboardList,
   IconPackages,
   IconShoppingCart,
-  IconTrendingUp,
   IconUsers,
 } from '@tabler/icons-react-native'
 import type { NavigationMenuData } from '@/components/navigation-menu'
@@ -17,7 +16,7 @@ const homeMenu: NavigationMenuData = [
   {
     icon: IconUsers,
     label: 'Clientes',
-    href: '/',
+    href: '/customers/list',
   },
   {
     icon: IconPackages,
@@ -27,17 +26,12 @@ const homeMenu: NavigationMenuData = [
   {
     icon: IconCalculator,
     label: 'Calculadora',
-    href: '/',
+    href: '/calculator',
   },
   {
     icon: IconClipboardList,
     label: 'Tarefas',
-    href: '/',
-  },
-  {
-    icon: IconTrendingUp,
-    label: 'Previsões',
-    href: '/',
+    href: '/tasks',
   },
 ]
 

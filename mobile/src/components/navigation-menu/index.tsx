@@ -23,9 +23,12 @@ export function NavigationMenu({ data }: NavigationMenuProps) {
       <FlatList
         data={data}
         keyExtractor={item => item.label}
-        numColumns={3} // Mostra 3 itens por linha
-        scrollEnabled={true} // Desativa o scroll
+        horizontal
         contentContainerStyle={s.list}
+        style={{
+          maxHeight: 108,
+        }}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={s.buttonWrapper}>
             <TouchableOpacity
