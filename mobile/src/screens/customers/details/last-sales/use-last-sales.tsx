@@ -1,30 +1,36 @@
 import { IconAlertSquareRounded } from '@tabler/icons-react-native'
 import { FlatList, Text, View } from 'react-native'
 import { colors } from '@/constants/theme'
-import type { GetCustomerById200LastSalesItem } from '@/http/models'
 import { UseLastSalesItem } from '../../components/last-sales-item/use-last-sales-item'
 import { s } from './styles'
 
 type UseLastSalesProps = {
-  topBuyers: GetCustomerById200LastSalesItem[]
+  lastSales: {
+    productId: string
+    productDescription: string
+    quantity: string | undefined
+    total: string
+    date: string
+  }[]
 }
 
-const UseLastSales = ({ topBuyers }: UseLastSalesProps) => {
+const UseLastSales = ({ lastSales }: UseLastSalesProps) => {
   return (
     <View style={s.container}>
-      <Text style={s.title}>Principais compradores:</Text>
+      <Text style={s.title}>Últimas compras`:</Text>
 
-      {topBuyers.length ? (
+      {lastSales.length ? (
         <FlatList
-          data={topBuyers}
-          keyExtractor={item => item.productid}
+          data={lastSales}
+          keyExtractor={item => item.productId}
           contentContainerStyle={s.list}
           renderItem={({ item }) => {
             return (
               <UseLastSalesItem
                 description={item.productDescription}
-                total={item.total.toString()}
-                quantity={item.quantity.toString() || ''}
+                total={item.total}
+                quantity={item.quantity || ''}
+                date={item.date}
               />
             )
           }}
@@ -39,4 +45,4 @@ const UseLastSales = ({ topBuyers }: UseLastSalesProps) => {
   )
 }
 
-export type { UseLastSales }
+export { UseLastSales }

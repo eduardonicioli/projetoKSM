@@ -8,12 +8,14 @@ type UseLastSalesItemProps = {
   description: string
   total: string
   quantity: string
+  date: string
 }
 
 const UseLastSalesItem = ({
   description,
   total,
   quantity,
+  date,
 }: UseLastSalesItemProps) => {
   return (
     <View style={s.container}>
@@ -22,7 +24,10 @@ const UseLastSalesItem = ({
       </View>
 
       <View style={s.infos}>
-        <Text style={s.product}>{description}</Text>
+        <Text style={s.customer}>{description}</Text>
+        <Text style={s.date}>Data: {date}</Text>
+        <Text style={s.customer}>{description}</Text>
+        <Text style={s.date}>Data: {date}</Text>
       </View>
 
       <View style={s.counts}>

@@ -30,8 +30,13 @@ export const s = StyleSheet.create({
   infos: {
     flex: 1,
   },
-  product: {
+  customer: {
     fontSize: 16,
+    fontFamily: fontFamily.medium,
+    lineHeight: 20,
+  },
+  date: {
+    fontSize: 12,
     fontFamily: fontFamily.medium,
     lineHeight: 20,
   },

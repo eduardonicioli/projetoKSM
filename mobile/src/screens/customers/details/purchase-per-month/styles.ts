@@ -50,4 +50,7 @@ export const s = StyleSheet.create({
     lineHeight: 28,
     color: colors.zinc[700],
   },
+  groupButton: {
+    marginTop: 16,
+  },
 })

@@ -1,7 +1,7 @@
 // biome-ignore-all lint:
 
 export type GetCustomerById200LastSalesItem = {
-  productid: string
+  productId: string
   productDescription: string
   quantity: number
   total: number
