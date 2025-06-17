@@ -6,27 +6,37 @@ import {
   IconMail,
 } from '@tabler/icons-react-native'
 import { useState } from 'react'
-import { Text, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
-
+import { Loading } from '@/components/loading'
+import { colors } from '@/constants/theme'
 import type { OnSubmitLoginType } from '@/hooks/use-login-container'
-
 import { s } from './styles'
 
 type UseLoginScreenProps = {
   onSubmit: ({ email, password }: OnSubmitLoginType) => void
+  isLoading: boolean
 }
 
-export function UseLoginScreen({ onSubmit }: UseLoginScreenProps) {
+export function UseLoginScreen({ onSubmit, isLoading }: UseLoginScreenProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   return (
     <View style={s.container}>
-      <Text>KSM</Text>
+      <Image
+        source={require('@/assets/kodiak_logo.png')}
+        style={{
+          width: 350,
+          height: 350,
+          marginTop: 64,
+          marginRight: 24,
+          marginBottom: -100,
+        }}
+      />
 
       <View style={s.loginWrapper}>
         <View>
@@ -54,10 +64,19 @@ export function UseLoginScreen({ onSubmit }: UseLoginScreenProps) {
           </Input>
         </View>
 
-        <Button onPress={() => onSubmit({ email, password })}>
-          <Button.Text>Entrar</Button.Text>
+        <Button
+          onPress={() => onSubmit({ email, password })}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Loading color={colors.zinc[100]} />
+          ) : (
+            <>
+              <Button.Text>Entrar</Button.Text>
 
-          <Button.Icon icon={IconChevronRight} />
+              <Button.Icon icon={IconChevronRight} />
+            </>
+          )}
         </Button>
       </View>
     </View>
